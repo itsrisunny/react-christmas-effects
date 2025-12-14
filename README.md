@@ -1,11 +1,4 @@
-Below is a **complete, production-ready `README.md`** for your npm package
-**`react-christmas-effects`** 🎄❄️🎆
 
-You can **copy–paste this directly** into `README.md`.
-
----
-
-````md
 # 🎄 react-christmas-effects ❄️🎆
 
 Add beautiful **Christmas snow** and **firecracker (fireworks) effects** to your React application — automatically shown **only in December**.
