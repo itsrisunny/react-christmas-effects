@@ -1,6 +1,6 @@
 {
   "name": "react-christmas-effects",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Christmas snow and firecracker effects for React (December only)",
   "main": "dist/index.cjs",
   "module": "dist/index.js",
