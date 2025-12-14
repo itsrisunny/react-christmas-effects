@@ -7,34 +7,38 @@ import "../styles/christmas.css";
 /**
  * ChristmasEffects
  *
- * Renders festive Christmas visual effects including:
+ * Displays festive Christmas effects:
  * - Falling snow ❄️
- * - Firecracker explosions 🎆
  * - Animated greeting text 🎄
+ * - Firecracker explosions 🎆
  *
- * The effects automatically activate only during December,
- * unless explicitly forced via props.
+ * The greeting text appears from the center of the screen.
+ * On every firecracker blast, each alphabet scatters randomly
+ * across the entire viewport.
+ *
+ * Effects are shown automatically in December,
+ * or can be forced for testing.
  *
  * @param {Object} props - Component props
  * @param {string} [props.text="🎄 Merry Christmas 🎄"]
- *   Text displayed in the center of the screen.
+ *  Text displayed in the center of the screen.
  * @param {number} [props.snowflakeCount=200]
- *   Number of snowflakes rendered on screen.
+ *  Number of snowflakes rendered.
  * @param {boolean} [props.showText=true]
- *   Toggle visibility of the greeting text.
+ *  Whether to show the greeting text.
  * @param {boolean} [props.fireworks=true]
- *   Enable or disable firecracker (explosion) animation.
+ *  Enable or disable firecracker explosions.
  * @param {number} [props.fireworkInterval=12000]
- *   Interval (in milliseconds) between firecracker blasts.
+ *  Interval (in milliseconds) between firecracker blasts.
  * @param {number} [props.startDay=1]
- *   Start day in December from which effects become active.
+ *  Start day in December when effects become active.
  * @param {number} [props.endDay=31]
- *   End day in December until which effects remain active.
+ *  End day in December when effects stop.
  * @param {boolean} [props.force=false]
- *   Force enable effects regardless of the current date.
+ *  Force enable effects regardless of date.
  *
  * @returns {JSX.Element|null}
- *   The animated Christmas effects UI, or null when inactive.
+ *  The Christmas effects UI or null when inactive.
  */
 export function ChristmasEffects({
   text = "🎄 Merry Christmas 🎄",
@@ -50,15 +54,15 @@ export function ChristmasEffects({
   const now = new Date();
 
   /**
-   * Tracks whether the text is currently exploding
-   * (letters scattering across the screen).
+   * Controls whether the text is in "exploded" state.
+   * When true, letters scatter across the screen.
    */
   const [explode, setExplode] = useState(false);
 
   /**
-   * Determines whether the Christmas effects should be active.
-   * - Active if `force` is true
-   * - Otherwise active only in December within the date range
+   * Determines whether effects should be active.
+   * - Enabled when `force` is true
+   * - Otherwise enabled only in December within the date range
    */
   const active =
     force ||
@@ -67,21 +71,20 @@ export function ChristmasEffects({
       now.getDate() <= endDay);
 
   /**
-   * Handles firecracker explosions and text scatter animation.
-   * Triggers immediately on activation and repeats on interval.
+   * Handles firecracker blasts and text explosion animation.
+   * Re-triggers animation at the configured interval.
    */
   useEffect(() => {
     if (!active || !fireworks) return;
 
     /**
-     * Triggers a single firecracker blast
-     * and starts the text explosion animation.
+     * Triggers one firecracker blast and text scatter.
      */
     const blast = () => {
       fireCrackers();
       setExplode(true);
 
-      // Reset text animation after explosion completes
+      // Reset animation so it can replay on next blast
       setTimeout(() => setExplode(false), 1400);
     };
 
@@ -92,7 +95,7 @@ export function ChristmasEffects({
     return () => clearInterval(id);
   }, [active, fireworks, fireworkInterval]);
 
-  // Do not render anything when effects are inactive
+  // Do not render anything if effects are inactive
   if (!active) return null;
 
   return (
@@ -104,14 +107,19 @@ export function ChristmasEffects({
 
       {/* 🎄 Animated greeting text */}
       {showText && (
-        <div className={`christmas-text ${explode ? "explode" : "enter"}`}>
+        <div
+          key={explode ? "explode" : "enter"}
+          className={`christmas-text ${explode ? "explode" : "enter"}`}
+        >
           {text.split("").map((char, i) => (
             <span
-              key={i}
+              key={`${explode}-${i}`}
               className="letter"
               style={{
-                "--x": `${Math.random() * 600 - 300}px`,
-                "--y": `${Math.random() * 600 - 300}px`,
+                "--x": `${Math.random() * window.innerWidth -
+                  window.innerWidth / 2}px`,
+                "--y": `${Math.random() * window.innerHeight -
+                  window.innerHeight / 2}px`,
                 "--r": `${Math.random() * 720 - 360}deg`
               }}
             >
