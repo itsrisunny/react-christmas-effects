@@ -1,0 +1,52 @@
+{
+  "name": "react-christmas-effects",
+  "version": "1.0.0",
+  "description": "Christmas snow and firecracker effects for React (December only)",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "type": "commonjs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itsrisunny/react-christmas-effects.git"
+  },
+  "keywords": [
+    "react",
+    "christmas",
+    "snow",
+    "fireworks",
+    "firecrackers",
+    "holiday",
+    "december"
+  ],
+  "author": "Rishabh Sunny",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/itsrisunny/react-christmas-effects/issues"
+  },
+  "homepage": "https://github.com/itsrisunny/react-christmas-effects#readme",
+  "peerDependencies": {
+    "react": ">=16.8"
+  },
+  "dependencies": {
+    "canvas-confetti": "^1.9.4",
+    "react-snowfall": "^2.4.0"
+  },
+  "devDependencies": {
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react": "^7.37.5",
+    "tsup": "^8.5.1"
+  },
+  "scripts": {
+    "lint": "eslint src",
+    "build": "tsup",
+    "prepublishOnly": "npm run lint && npm run build"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
