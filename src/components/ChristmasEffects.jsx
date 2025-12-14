@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import Snowfall from "react-snowfall";
 import { isDecember } from "../utils/isDecember";
 import { fireCrackers } from "../utils/fireCrackers";
