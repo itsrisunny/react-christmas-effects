@@ -1,23 +1,24 @@
-
 # 🎄 react-christmas-effects ❄️🎆
 
-Add beautiful **Christmas snow** and **firecracker (fireworks) effects** to your React application — automatically shown **only in December**.
+Add **elegant Christmas snowfall**, **one-time greeting text**, and a **single firecracker burst** to your React app — automatically shown **only in December**.
 
-✔ Lightweight  
-✔ No config required  
-✔ December-only by default  
-✔ Works with Vite, CRA, Next.js (client-side)  
-✔ Fully customizable  
+Built with **Framer Motion** for smooth, accessible animations.
+
+✔ Lightweight
+✔ Elegant (no noisy animations)
+✔ December-only by default
+✔ Text & firecracker shown **once**
+✔ Works with Vite, CRA, Next.js (client-side)
 
 ---
 
 ## ✨ Demo
 
-Snow falling ❄️  
-Firecrackers bursting 🎆  
-"Merry Christmas" message 🎄  
+❄️ Snow falling continuously
+🎄 Greeting text fades in once
+🎆 Firecracker bursts once
 
-> Automatically activates from **December 1st to December 31st**
+> Automatically active from **December 1st → December 31st**
 
 ---
 
@@ -25,7 +26,7 @@ Firecrackers bursting 🎆
 
 ```bash
 npm install react-christmas-effects
-````
+```
 
 or
 
@@ -41,10 +42,23 @@ pnpm add react-christmas-effects
 
 ---
 
+## 🎨 IMPORTANT: Import CSS
+
+You **must import the bundled CSS** once in your app:
+
+```js
+import "react-christmas-effects/dist/index.css";
+```
+
+This is required for layout and styling.
+
+---
+
 ## 🚀 Basic Usage
 
 ```jsx
 import { ChristmasEffects } from "react-christmas-effects";
+import "react-christmas-effects/dist/index.css";
 
 function App() {
   return <ChristmasEffects />;
@@ -60,7 +74,7 @@ Your app will now show Christmas effects **only in December**.
 
 ## 🧪 Force Enable (for testing)
 
-If you want to test outside December:
+To preview effects outside December:
 
 ```jsx
 <ChristmasEffects force />
@@ -72,16 +86,15 @@ If you want to test outside December:
 
 ### `<ChristmasEffects />`
 
-| Prop               | Type      | Default                   | Description               |
-| ------------------ | --------- | ------------------------- | ------------------------- |
-| `text`             | `string`  | `"🎄 Merry Christmas 🎄"` | Text displayed on screen  |
-| `snowflakeCount`   | `number`  | `200`                     | Number of snowflakes      |
-| `showText`         | `boolean` | `true`                    | Show / hide message text  |
-| `fireworks`        | `boolean` | `true`                    | Enable firecrackers       |
-| `fireworkInterval` | `number`  | `12000`                   | Firecracker interval (ms) |
-| `startDay`         | `number`  | `1`                       | Start day in December     |
-| `endDay`           | `number`  | `31`                      | End day in December       |
-| `force`            | `boolean` | `false`                   | Force enable anytime      |
+| Prop             | Type      | Default                   | Description                             |
+| ---------------- | --------- | ------------------------- | --------------------------------------- |
+| `text`           | `string`  | `"🎄 Merry Christmas 🎄"` | Greeting text shown once                |
+| `snowflakeCount` | `number`  | `200`                     | Number of falling snowflakes            |
+| `showText`       | `boolean` | `true`                    | Show / hide greeting text               |
+| `fireworks`      | `boolean` | `true`                    | Enable one-time firecracker burst       |
+| `startDay`       | `number`  | `1`                       | Start day in December                   |
+| `endDay`         | `number`  | `31`                      | End day in December                     |
+| `force`          | `boolean` | `false`                   | Force enable regardless of current date |
 
 ---
 
@@ -119,18 +132,10 @@ If you want to test outside December:
 
 ---
 
-### Full Custom Example
+### Minimal Setup (Snow Only)
 
 ```jsx
-<ChristmasEffects
-  text="🎄 Season’s Greetings 🎄"
-  snowflakeCount={300}
-  fireworks
-  fireworkInterval={8000}
-  startDay={5}
-  endDay={25}
-  force
-/>
+<ChristmasEffects showText={false} fireworks={false} />
 ```
 
 ---
@@ -138,11 +143,13 @@ If you want to test outside December:
 ## 🧠 How It Works
 
 * Uses **react-snowfall** for snow ❄️
-* Uses **canvas-confetti** for fireworks 🎆
-* Checks the system date
-* Renders nothing outside December
+* Uses **canvas-confetti** for firecracker 🎆
+* Uses **Framer Motion** for smooth text animation
+* Text & firecracker run **only once per page load**
+* Snow runs continuously
+* Automatically disables outside December
 * Uses `position: fixed` overlay
-* Does NOT block user interactions (`pointer-events: none`)
+* Does **not block user interaction** (`pointer-events: none`)
 
 ---
 
@@ -156,45 +163,36 @@ If you want to test outside December:
 | Next.js   | ✅ (client-side only) |
 | Remix     | ✅ (client-side)      |
 
-> ⚠️ For Next.js, render inside a client component.
+> ⚠️ For Next.js, render inside a **client component**.
 
 ---
 
-## 🧩 Styling
+## ♿ Accessibility & Performance
 
-Styles are bundled automatically.
-
-If needed, you can override styles using CSS:
-
-```css
-.christmas-text {
-  font-size: 4rem;
-  color: gold;
-}
-```
-
----
-
-## 🔒 Accessibility & Performance
-
-✔ No event listeners attached
+✔ Respects `prefers-reduced-motion`
+✔ No event listeners on DOM
 ✔ No layout shift
 ✔ Lightweight canvas effects
-✔ Safe for production
+✔ Safe for production use
 
 ---
 
 ## 🐛 Troubleshooting
 
-### Snow not visible?
+### Effects not visible?
 
-* Ensure parent container has height
+* Ensure CSS is imported:
+
+  ```js
+  import "react-christmas-effects/dist/index.css";
+  ```
 * Check z-index conflicts
+* Ensure component renders on client side
 
-### Firecrackers not firing?
+### Firecracker not firing?
 
-* Must run in browser
-* Not supported during SSR render
+* Runs only in browser (not SSR)
+* Fires **only once per page load**
 
 ---
 
@@ -207,22 +205,22 @@ Free to use in personal and commercial projects.
 
 ## 🌟 Contributing
 
-PRs welcome!
+PRs are welcome!
 
 Ideas:
 
 * 🎆 New Year mode
-* 🔊 Sound effects
-* 🌙 Dark mode themes
-* 🎨 Custom color themes
+* 🔊 Optional sound effects
+* 🎨 Theme customization
+* 🌙 Dark mode variants
 
 ---
 
 ## ❤️ Support
 
-If you like this package, please ⭐ the repo on GitHub
+If you like this package, please ⭐ the GitHub repo
 and share it with the community 🎄✨
 
 ---
 
-Happy Coding & Merry Christmas! 🎅❄️🎆
+**Happy Coding & Merry Christmas! 🎅❄️🎆**

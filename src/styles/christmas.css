@@ -1,4 +1,4 @@
-/* Full screen overlay */
+/* Full screen overlay container */
 .christmas-container {
   position: fixed;
   inset: 0;
@@ -6,48 +6,27 @@
   z-index: 9999;
 }
 
-/* Snow behind text */
+/* Snow layer stays behind everything */
 .snow-layer {
   position: absolute;
   inset: 0;
   z-index: 1;
 }
 
-/* Text anchor point */
+/* Greeting text styling */
 .christmas-text {
   position: fixed;
   top: 50%;
   left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 2;
-}
 
-/* Letters start from same point */
-.letter {
-  position: absolute;
-  left: 0;
-  top: 0;
   font-size: 3rem;
   font-family: Georgia, serif;
-  color: red;
-  transform: translate(-50%, -50%);
-  white-space: pre;
-}
+  font-weight: bold;
 
-/* Explosion */
-.explode .letter {
-  animation: explode 1.2s ease-out forwards;
-}
-
-@keyframes explode {
-  from {
-    opacity: 1;
-    transform: translate(-50%, -50%);
-  }
-  to {
-    opacity: 0;
-    transform: translate(
-      calc(-50% + var(--x)),
-      calc(-50% + var(--y))
-    );
-  }
+  color: #ffffff;
+  text-shadow:
+    0 0 6px #ff0000,
+    0 0 12px #ff0000;
 }
