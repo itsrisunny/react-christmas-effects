@@ -21,7 +21,9 @@ module.exports = [
         window: "readonly",
         document: "readonly",
         setInterval: "readonly",
-        clearInterval: "readonly"
+        clearInterval: "readonly",
+        setTimeout: "readonly",
+        clearTimeout: "readonly"
       }
     },
     settings: {
