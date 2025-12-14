@@ -1,4 +1,6 @@
-/* Root container */
+/* ================================
+   Root container (full screen)
+================================ */
 .christmas-container {
   position: fixed;
   inset: 0;
@@ -6,34 +8,49 @@
   z-index: 9999;
 }
 
-/* ❄️ Snow layer (behind text) */
+/* ================================
+   Snow layer (background)
+================================ */
 .snow-layer {
   position: absolute;
   inset: 0;
   z-index: 1;
 }
 
-/* 🎄 Text wrapper */
+/* ================================
+   Text wrapper (center point)
+================================ */
 .christmas-text {
   position: absolute;
   top: 50%;
   left: 50%;
+  width: 0;
+  height: 0;
   transform: translate(-50%, -50%);
-  display: flex;
+  z-index: 2;
+
   font-size: 3rem;
   font-family: Georgia, serif;
   color: white;
   text-shadow: 0 0 14px red;
-  z-index: 2;
 }
 
-/* Individual letters */
+/* ================================
+   Individual letters
+   (ALL start from same center)
+================================ */
 .letter {
-  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%);
   will-change: transform, opacity;
+  white-space: pre;
 }
 
-/* ✨ Entry animation */
+/* ================================
+   Entry animation (center appear)
+================================ */
 .enter .letter {
   animation: appear 0.8s ease-out forwards;
 }
@@ -41,15 +58,17 @@
 @keyframes appear {
   from {
     opacity: 0;
-    transform: scale(0.4);
+    transform: translate(-50%, -50%) scale(0.4);
   }
   to {
     opacity: 1;
-    transform: scale(1);
+    transform: translate(-50%, -50%) scale(1);
   }
 }
 
-/* 💥 Explosion animation */
+/* ================================
+   Explosion animation (scatter)
+================================ */
 .explode .letter {
   animation: scatter 1.3s ease-out forwards;
 }
@@ -57,12 +76,15 @@
 @keyframes scatter {
   from {
     opacity: 1;
-    transform: translate(0, 0) rotate(0deg) scale(1);
+    transform: translate(-50%, -50%) rotate(0deg) scale(1);
   }
   to {
     opacity: 0;
     transform:
-      translate(var(--x), var(--y))
+      translate(
+        calc(-50% + var(--x)),
+        calc(-50% + var(--y))
+      )
       rotate(var(--r))
       scale(0.6);
   }
