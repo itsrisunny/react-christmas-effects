@@ -14,12 +14,12 @@ jobs:
       packages: write
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
@@ -31,7 +31,7 @@ jobs:
       - name: Run linter
         run: npm run lint
 
-      - name: Build
+      - name: Build package
         run: npm run build
 
       - name: Configure Git
@@ -39,11 +39,17 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
 
-      - name: Bump patch version
-        run: npm version patch
+      - name: Bump patch version (safe)
+        run: |
+          CURRENT_VERSION=$(node -p "require('./package.json').version")
+          if git rev-parse "v$CURRENT_VERSION" >/dev/null 2>&1; then
+            echo "Tag v$CURRENT_VERSION already exists. Skipping version bump."
+          else
+            npm version patch
+          fi
 
-      - name: Push version bump
-        run: git push --follow-tags
+      - name: Push changes and tags
+        run: git push --tags
 
       - name: Publish to npm
         run: npm publish --access public
